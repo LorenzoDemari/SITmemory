@@ -1,0 +1,12 @@
+group 'it.emarolab.sit'
+version = project.catkin.pkg.version
+
+repositories {
+    maven {
+        url "../../../../devel/share/maven/"
+    }
+}
+
+dependencies {
+    compile project(':owloop')
+}
