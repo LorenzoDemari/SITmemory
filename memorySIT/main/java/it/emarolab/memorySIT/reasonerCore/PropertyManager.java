@@ -1,8 +1,7 @@
-package it.emarolab.sit.reasonerCore;
+package it.emarolab.memorySIT.reasonerCore;
 
-import it.emarolab.owloop.aMORDescriptor.MORAxioms;
-import it.emarolab.sit.Dictionary_reasoner;
-import it.emarolab.sit.SITBase;
+import it.emarolab.owloop.descriptor.construction.descriptorEntitySet.DescriptorEntitySet;
+import it.emarolab.memorySIT.Dictionary_reasoner;
 import it.emarolab.sit.owloopDescriptor.SceneIndividualDescriptor;
 import it.emarolab.sit.sceneRepresentation.FullSceneRepresentation;
 
@@ -21,13 +20,13 @@ public interface PropertyManager {
     static float ReadProperty(String property, SceneIndividualDescriptor IndDescr)
     {
         float prop= 0;
-        for( MORAxioms.DataSemantic ll : IndDescr.getDataSemantics()){
+        for( DescriptorEntitySet.DataLinks ll : IndDescr.getIndividualDataProperties()){
 
 
             String f =  ll.getValues().toString().replace("{","").replace("}","");
 
 
-            if (ll.getSemantic().toString().contains(property)) {
+            if (ll.getExpression().toString().contains(property)) {
                 prop  =  Float.valueOf(f);
 
                 System.out.println(property + " "+ prop + " " );
@@ -42,7 +41,7 @@ public interface PropertyManager {
         recognition.getSceneDescriptor().addData(Dictionary_reasoner.SCORE, 0.5);
         recognition.getSceneDescriptor().addData(Dictionary_reasoner.STORING_COUNTER, 0);
         recognition.getSceneDescriptor().addData(Dictionary_reasoner.RETRIEVING_COUNTER, 0);
-        recognition.getSceneDescriptor().writeSemantic();
+        recognition.getSceneDescriptor().writeExpressionAxioms();
 
     }
 

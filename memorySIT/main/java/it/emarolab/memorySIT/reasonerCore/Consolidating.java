@@ -1,8 +1,8 @@
-package it.emarolab.sit.reasonerCore;
+package it.emarolab.memorySIT.reasonerCore;
 
 import it.emarolab.amor.owlInterface.OWLReferences;
-import it.emarolab.owloop.aMORDescriptor.MORAxioms;
-import it.emarolab.sit.Dictionary_reasoner;
+import it.emarolab.owloop.descriptor.construction.descriptorEntitySet.DescriptorEntitySet;
+import it.emarolab.memorySIT.Dictionary_reasoner;
 import it.emarolab.sit.SITBase;
 import it.emarolab.sit.owloopDescriptor.SceneClassDescriptor;
 import it.emarolab.sit.owloopDescriptor.SceneIndividualDescriptor;
@@ -38,7 +38,7 @@ public class Consolidating extends ReasonerBase implements GetBranch{
         Date date = new Date(stamp.getTime());
         System.out.println("%%%%%%%%%  Timestamp Start <" + this +"> : " + date + "  %%%%%%%%%%%%%%");
 
-        MORAxioms.Concepts csup=null;
+        DescriptorEntitySet.Concepts csup=null;
         do {
 
             nodeScore = GetBranch.EvaluationScore(nodeToConsolidate, ontoRef);
@@ -47,8 +47,8 @@ public class Consolidating extends ReasonerBase implements GetBranch{
             //this.SaveNdOpenOnto();
             ontoRef.setOWLEnquirerCompletenessFlag(false);
             SceneClassDescriptor nodeDesc = new SceneClassDescriptor(nodeToConsolidate, ontoRef);
-            nodeDesc.readSemantic();
-            csup = nodeDesc.getSuperConcept();
+            nodeDesc.readExpressionAxioms();
+            csup = nodeDesc.getSuperConcepts();
             Set<String> nome= ontoRef.getOWLObjectName(csup);
             for( String lllls : nome) {
 
@@ -64,24 +64,24 @@ public class Consolidating extends ReasonerBase implements GetBranch{
 
 
 
-          float normFactor=  GetBranch.Normalization(ontoRef);
+          float normFactor = GetBranch.Normalization(ontoRef);
 
         SceneClassDescriptor scoreDesc = new SceneClassDescriptor("Score", ontoRef);
-        scoreDesc.readSemantic();
-        MORAxioms.Individuals indScore = scoreDesc.getIndividualClassified();
+        scoreDesc.readExpressionAxioms();
+        DescriptorEntitySet.Individuals indScore = scoreDesc.getIndividualInstances();
 
 
         for (OWLNamedIndividual i : indScore) {
             System.out.println("indScore   " + i.toString());
             SceneIndividualDescriptor indScoreDesc = new SceneIndividualDescriptor(i, ontoRef);
-            indScoreDesc.readSemantic();
-            indScoreDesc.getDataSemantics();
+            indScoreDesc.readExpressionAxioms();
+            indScoreDesc.getIndividualDataProperties();
             float temp= PropertyManager.ReadProperty(Dictionary_reasoner.SCORE, indScoreDesc);
             temp=temp/normFactor;
 
             indScoreDesc.removeData(Dictionary_reasoner.SCORE);
             indScoreDesc.addData(Dictionary_reasoner.SCORE, temp);
-            indScoreDesc.writeSemantic();
+            indScoreDesc.writeExpressionAxioms();
 
 
         }

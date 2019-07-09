@@ -1,4 +1,6 @@
-package it.emarolab.sit;
+package it.emarolab.memorySIT;
+
+import it.emarolab.sit.SITBase;
 
 public interface Dictionary_reasoner extends SITBase {
 

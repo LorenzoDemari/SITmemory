@@ -1,13 +1,11 @@
-package it.emarolab.sit.reasonerCore;
+package it.emarolab.memorySIT.reasonerCore;
 
 
 import it.emarolab.amor.owlInterface.OWLReferences;
-import it.emarolab.sit.Dictionary_reasoner;
-import it.emarolab.sit.SITBase;
+import it.emarolab.memorySIT.Dictionary_reasoner;
 import it.emarolab.sit.owloopDescriptor.SceneIndividualDescriptor;
 import it.emarolab.sit.realObject.GeometricPrimitive;
 import it.emarolab.sit.sceneRepresentation.FullSceneRepresentation;
-import org.apache.jena.reasoner.Reasoner;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -62,7 +60,7 @@ public class Retrieving extends ReasonerBase implements AddNode, RemoveNode, Bui
 
         SceneIndividualDescriptor descrip= Recognition.Recognize(recognition,ontoRef);
          descrip.removeData(Dictionary_reasoner.RETRIEVING_COUNTER);
-         descrip.writeSemantic();
+         descrip.writeExpressionAxioms();
         CleanIndividuals.Clean(objects,recognition,ontoRef);
         ontoRef=this.SaveNdOpenOnto();
 

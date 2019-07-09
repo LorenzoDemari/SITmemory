@@ -1,4 +1,4 @@
-package it.emarolab.sit.reasonerCore;
+package it.emarolab.memorySIT.reasonerCore;
 
 import it.emarolab.sit.SITBase;
 import it.emarolab.sit.sceneRepresentation.FullSceneRepresentation;
@@ -17,7 +17,7 @@ public interface AddNode {
         String nodeName=SITBase.CLASS.SCENE + "-" + (recognition.getID() -1);
         recognition.learn(nodeName);
 
-        recognition.getSceneDescriptor().writeSemantic();
+        recognition.getSceneDescriptor().writeExpressionAxioms();
 
         return nodeName;
     }

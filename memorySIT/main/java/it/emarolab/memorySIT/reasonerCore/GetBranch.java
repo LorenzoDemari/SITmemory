@@ -1,8 +1,8 @@
-package it.emarolab.sit.reasonerCore;
+package it.emarolab.memorySIT.reasonerCore;
 
 import it.emarolab.amor.owlInterface.OWLReferences;
-import it.emarolab.owloop.aMORDescriptor.MORAxioms;
-import it.emarolab.sit.Dictionary_reasoner;
+import it.emarolab.owloop.descriptor.construction.descriptorEntitySet.DescriptorEntitySet;
+import it.emarolab.memorySIT.Dictionary_reasoner;
 import it.emarolab.sit.SITBase;
 import it.emarolab.sit.owloopDescriptor.SceneClassDescriptor;
 import it.emarolab.sit.owloopDescriptor.SceneIndividualDescriptor;
@@ -41,9 +41,9 @@ public interface GetBranch {
         String sceneName= SITBase.INDIVIDUAL.SCENE+sceneNumber;
 
         SceneClassDescriptor nodeDesc = new SceneClassDescriptor(nodeName, ontoRef);
-        nodeDesc.readSemantic();
+        nodeDesc.readExpressionAxioms();
 
-        MORAxioms.Concepts csub  =nodeDesc.getSubConcept();
+        DescriptorEntitySet.Concepts csub  =nodeDesc.getSubConcepts();
         Object[] objects1 = csub.toArray();
 
 
@@ -54,7 +54,7 @@ public interface GetBranch {
             String indScene = SITBase.INDIVIDUAL.SCENE + f.substring(f.length() - 1, f.length());
 
             SceneIndividualDescriptor indSceneDesc = new SceneIndividualDescriptor(indScene, ontoRef);
-            indSceneDesc.readSemantic();
+            indSceneDesc.readExpressionAxioms();
 
 
             scoreIndScene = PropertyManager.ReadProperty(Dictionary_reasoner.SCORE, indSceneDesc);
@@ -82,7 +82,7 @@ public interface GetBranch {
           /**/
 
         SceneIndividualDescriptor indSceneDesc2= new SceneIndividualDescriptor(sceneName, ontoRef);
-        indSceneDesc2.readSemantic();
+        indSceneDesc2.readExpressionAxioms();
         sj=PropertyManager.ReadProperty(Dictionary_reasoner.STORING_COUNTER, indSceneDesc2);
         rj=PropertyManager.ReadProperty(Dictionary_reasoner.RETRIEVING_COUNTER, indSceneDesc2);
         jd=nodeDesc.getCardinality();
@@ -90,7 +90,7 @@ public interface GetBranch {
 
         indSceneDesc2.removeData(Dictionary_reasoner.SCORE);
         indSceneDesc2.addData(Dictionary_reasoner.SCORE, totalScore);
-        indSceneDesc2.writeSemantic();
+        indSceneDesc2.writeExpressionAxioms();
 
 
         return totalScore;
@@ -102,15 +102,15 @@ public interface GetBranch {
     {
         float normFactor=0;
         SceneClassDescriptor scoreDesc = new SceneClassDescriptor("Score", ontoRef);
-        scoreDesc.readSemantic();
-        MORAxioms.Individuals indScore = scoreDesc.getIndividualClassified();
+        scoreDesc.readExpressionAxioms();
+        DescriptorEntitySet.Individuals indScore = scoreDesc.getIndividualInstances();
 
 
         for (OWLNamedIndividual i : indScore) {
             System.out.println("indScore   " + i.toString());
             SceneIndividualDescriptor indScoreDesc = new SceneIndividualDescriptor(i, ontoRef);
-            indScoreDesc.readSemantic();
-            indScoreDesc.getDataSemantics();
+            indScoreDesc.readExpressionAxioms();
+            indScoreDesc.getIndividualDataProperties();
             normFactor+= PropertyManager.ReadProperty(Dictionary_reasoner.SCORE, indScoreDesc);
         }
 

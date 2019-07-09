@@ -1,8 +1,8 @@
-package it.emarolab.sit.reasonerCore;
+package it.emarolab.memorySIT.reasonerCore;
 
 import it.emarolab.amor.owlInterface.OWLReferences;
-import it.emarolab.owloop.aMORDescriptor.MORAxioms;
-import it.emarolab.sit.Dictionary_reasoner;
+import it.emarolab.owloop.descriptor.construction.descriptorEntitySet.DescriptorEntitySet;
+import it.emarolab.memorySIT.Dictionary_reasoner;
 import it.emarolab.sit.SITBase;
 import it.emarolab.sit.owloopDescriptor.SceneClassDescriptor;
 import it.emarolab.sit.owloopDescriptor.SceneIndividualDescriptor;
@@ -34,16 +34,16 @@ public class Forgetting extends ReasonerBase implements GetBranch, RemoveNode, P
         System.out.println("%%%%%%%%%  Timestamp Start <" + this +"> : " + date + "  %%%%%%%%%%%%%%");
 
         SceneClassDescriptor scoreDesc= new SceneClassDescriptor("Score",ontoRef);
-        scoreDesc.readSemantic();
-        MORAxioms.Individuals indScore = scoreDesc.getIndividualClassified();
+        scoreDesc.readExpressionAxioms();
+        DescriptorEntitySet.Individuals indScore = scoreDesc.getIndividualInstances();
 
 
         for ( OWLNamedIndividual i : indScore)
         {
             System.out.println("indScore   "+i.toString());
             SceneIndividualDescriptor indScoreDesc= new SceneIndividualDescriptor(i,ontoRef);
-            indScoreDesc.readSemantic();
-            indScoreDesc.getDataSemantics();
+            indScoreDesc.readExpressionAxioms();
+            indScoreDesc.getIndividualDataProperties();
 
          //   float scorediognuno=PropertyManager.ReadProperty(SITBase.DATA_PROPERTY.SCORE,indScoreDesc);
             String level=PropertyManager.EvaluateLevel(indScoreDesc);
@@ -63,8 +63,8 @@ public class Forgetting extends ReasonerBase implements GetBranch, RemoveNode, P
                 ontoRef.removeIndividual(i);
                 //indScoreDesc.removeTypeIndividual(INDIVIDUAL.SCENE+sceneNumber);
 
-                indScoreDesc.readSemantic().clear();
-                indScoreDesc.writeSemantic();
+                indScoreDesc.readExpressionAxioms().clear(); // TODO check!
+                indScoreDesc.writeExpressionAxioms();
 
 
                 ontoRef= this.SaveNdOpenOnto();

@@ -1,18 +1,13 @@
-package it.emarolab.sit.owloopDescriptor;
+package it.emarolab.memorySIT.owloopDescriptor;
 
 import it.emarolab.amor.owlInterface.OWLReferences;
-import it.emarolab.amor.owlInterface.SemanticRestriction;
-import it.emarolab.owloop.aMORDescriptor.MORAxioms;
-import it.emarolab.owloop.aMORDescriptor.MORConcept;
-import it.emarolab.owloop.aMORDescriptor.utility.MORConceptBase;
-import it.emarolab.sit.SITBase;
-import it.emarolab.sit.realObject.*;
+import it.emarolab.owloop.descriptor.construction.descriptorEntitySet.DescriptorEntitySet;
+import it.emarolab.owloop.descriptor.construction.descriptorExpression.ConceptExpression;
+import it.emarolab.owloop.descriptor.construction.descriptorGround.ConceptGround;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * The  <a href="https://github.com/EmaroLab/owloop">OWLOOP</a> {@code Descriptor} for a class representing an abstract Scene.
@@ -33,12 +28,12 @@ import java.util.Set;
  * </small></div>
  */
 public class ObjectClassDescriptor
-        extends MORConceptBase
-        implements MORConcept.Sub<ObjectClassDescriptor>,
-        MORConcept.Classify<ObjectIndividualDescriptor> {
+        extends ConceptGround
+        implements ConceptExpression.Sub<ObjectClassDescriptor>,
+        ConceptExpression.Instance<ObjectIndividualDescriptor> {
 
-    private MORAxioms.Concepts subConcept = new MORAxioms.Concepts();
-    private MORAxioms.Individuals classifiedIndividual = new MORAxioms.Individuals();
+    private DescriptorEntitySet.Concepts subConcept = new DescriptorEntitySet.Concepts();
+    private DescriptorEntitySet.Individuals classifiedIndividual = new DescriptorEntitySet.Individuals();
 
     public ObjectClassDescriptor(OWLClass instance, String ontoName) {
         super(instance, ontoName);
@@ -54,40 +49,39 @@ public class ObjectClassDescriptor
     }
 
     @Override
-    public List<MappingIntent> readSemantic() {
-        List<MappingIntent> r = Sub.super.readSemantic();
-        r.addAll( Classify.super.readSemantic());
+    public List<MappingIntent> readExpressionAxioms() {
+        List<MappingIntent> r = Sub.super.readExpressionAxioms();
+        r.addAll( Instance.super.readExpressionAxioms());
         return r;
     }
 
     @Override
-    public List<MappingIntent> writeSemantic() {
-        List<MappingIntent> r = Classify.super.writeSemantic();
-        r.addAll( Sub.super.writeSemantic());
+    public List<MappingIntent> writeExpressionAxioms() {
+        List<MappingIntent> r = Instance.super.writeExpressionAxioms();
+        r.addAll( Sub.super.writeExpressionAxioms());
         return r;
     }
 
 
     @Override
-    public ObjectClassDescriptor getNewSubConcept(OWLClass instance, OWLReferences ontology) {
-        return new ObjectClassDescriptor( instance, ontology);
-    }
-
-    @Override
-    public MORAxioms.Concepts getSubConcept() {
-        return subConcept;
-    }
-
-    @Override
-    public ObjectIndividualDescriptor getNewIndividualClassified(OWLNamedIndividual instance, OWLReferences ontology) {
+    public ObjectIndividualDescriptor getIndividualDescriptor(OWLNamedIndividual instance, OWLReferences ontology) {
         return new ObjectIndividualDescriptor( instance, ontology);
     }
 
     @Override
-    public MORAxioms.Individuals getIndividualClassified() {
+    public DescriptorEntitySet.Individuals getIndividualInstances() {
         return classifiedIndividual;
     }
 
+    @Override
+    public ObjectClassDescriptor getSubConceptDescriptor(OWLClass instance, OWLReferences ontology) {
+        return new ObjectClassDescriptor( instance, ontology);
+    }
+
+    @Override
+    public DescriptorEntitySet.Concepts getSubConcepts() {
+        return subConcept;
+    }
 
 
     @Override

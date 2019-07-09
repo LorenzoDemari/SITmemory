@@ -1,4 +1,4 @@
-package it.emarolab.sit.reasonerCore;
+package it.emarolab.memorySIT.reasonerCore;
 
 import it.emarolab.amor.owlInterface.OWLReferences;
 import it.emarolab.sit.owloopDescriptor.SceneClassDescriptor;
@@ -15,12 +15,12 @@ public interface RemoveNode
     static boolean deletenode(String sceneName, OWLReferences ontoRef)
     {
         SceneClassDescriptor remover = new SceneClassDescriptor(sceneName, ontoRef);
-        remover.readSemantic();
-        remover.getDefinitionConcept().clear();
-        remover.writeSemantic();
+        remover.readExpressionAxioms();
+        remover.getDefinitionConcepts().clear();
+        remover.writeExpressionAxioms();
         remover.addSuperConcept("Trash");
-        remover.writeSemantic();
-        System.out.println(" $$$$$ " + remover.getDefinitionConcept());
+        remover.writeExpressionAxioms();
+        System.out.println(" $$$$$ " + remover.getDefinitionConcepts());
 
         return true;
     }

@@ -1,9 +1,9 @@
-package it.emarolab.sit.reasonerCore;
+package it.emarolab.memorySIT.reasonerCore;
 
 import it.emarolab.amor.owlInterface.OWLReferences;
 import it.emarolab.sit.SITBase;
-import it.emarolab.sit.owloopDescriptor.ObjectClassDescriptor;
-import it.emarolab.sit.owloopDescriptor.ObjectIndividualDescriptor;
+import it.emarolab.memorySIT.owloopDescriptor.ObjectClassDescriptor;
+import it.emarolab.memorySIT.owloopDescriptor.ObjectIndividualDescriptor;
 import it.emarolab.sit.realObject.*;
 
 import java.util.HashSet;
@@ -24,7 +24,7 @@ public interface BuildScene {
         for (ObjectIndividualDescriptor o : objIndv) {
             Set<ObjectClassDescriptor> objTypes = o.buildTypeIndividual();
             for (ObjectClassDescriptor obj : objTypes) {
-                if (obj.getSubConcept().size() <= 1) {
+                if (obj.getSubConcepts().size() <= 1) {
                     String objTypeName = ontoRef.getOWLObjectName(obj.getGround().getGroundInstance());
                     try {
                         GeometricPrimitive primitive = null;
@@ -41,7 +41,7 @@ public interface BuildScene {
                             primitive = new Cylinder(o.getGround().getGroundInstance(), ontoRef);
                            // System.out.println("**********" + o.getGround().getGroundInstance());
                         }
-                        primitive.readSemantic();
+                        primitive.readExpressionAxioms();
                         objectsRead.add(primitive);
                     } catch (Exception e) {
                         System.err.println("cannot read object " + objTypeName);

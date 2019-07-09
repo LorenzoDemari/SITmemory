@@ -1,21 +1,13 @@
-package it.emarolab.sit;
+package it.emarolab.memorySIT;
 
 import it.emarolab.amor.owlDebugger.Logger;
 import it.emarolab.amor.owlInterface.OWLReferences;
 import it.emarolab.amor.owlInterface.OWLReferencesInterface;
-import it.emarolab.amor.owlInterface.SemanticRestriction;
-import it.emarolab.owloop.aMORDescriptor.MORAxioms;
-import it.emarolab.sit.owloopDescriptor.ObjectClassDescriptor;
-import it.emarolab.sit.owloopDescriptor.ObjectIndividualDescriptor;
-import it.emarolab.sit.owloopDescriptor.SceneClassDescriptor;
-import it.emarolab.sit.owloopDescriptor.SceneIndividualDescriptor;
+import it.emarolab.memorySIT.reasonerCore.*;
+import it.emarolab.sit.SITBase;
+import it.emarolab.sit.SpatialSimplifier;
 import it.emarolab.sit.realObject.*;
-import it.emarolab.sit.reasonerCore.*;
 import it.emarolab.sit.sceneRepresentation.FullSceneRepresentation;
-import org.apache.jena.base.Sys;
-import org.semanticweb.owlapi.model.OWLNamedIndividual;
-import org.semanticweb.owlapi.model.OWLOntologyChange;
-import org.semanticweb.owlapi.model.OWLRuntimeException;
 
 import java.sql.Timestamp;
 import java.util.Date;

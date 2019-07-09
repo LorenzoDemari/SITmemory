@@ -1,9 +1,8 @@
-package it.emarolab.sit.reasonerCore;
+package it.emarolab.memorySIT.reasonerCore;
 import it.emarolab.amor.owlInterface.OWLReferences;
 import it.emarolab.sit.SITBase;
-import it.emarolab.sit.owloopDescriptor.ObjectClassDescriptor;
-import it.emarolab.sit.owloopDescriptor.ObjectIndividualDescriptor;
-import it.emarolab.sit.owloopDescriptor.SceneIndividualDescriptor;
+import it.emarolab.memorySIT.owloopDescriptor.ObjectClassDescriptor;
+import it.emarolab.memorySIT.owloopDescriptor.ObjectIndividualDescriptor;
 import it.emarolab.sit.realObject.GeometricPrimitive;
 import it.emarolab.sit.sceneRepresentation.FullSceneRepresentation;
 import java.sql.Timestamp;
@@ -39,14 +38,14 @@ public class Storing extends ReasonerBase implements AddNode, BuildScene, Recogn
 
         System.out.println("Recognised with best confidence: " + recognition.getRecognitionConfidence() + " should learn? " + recognition.shouldLearn());
         System.out.println("Best recognised class: " + recognition.getBestRecognitionDescriptor());
-        System.out.println("Other recognised classes: " + recognition.getSceneDescriptor().getTypeIndividual());
+        System.out.println("Other recognised classes: " + recognition.getSceneDescriptor().getIndividualTypes());
 
 /*        SceneIndividualDescriptor sceneIndDescr = new SceneIndividualDescriptor(recognition.getSceneIndName(), ontoRef);
         sceneIndDescr.readSemantic();*/
 
 
 
-            Recognition.Recognize(recognition,ontoRef);
+        Recognition.Recognize(recognition,ontoRef);
 
 
         /////// learn the new scene if is the case
@@ -58,8 +57,8 @@ public class Storing extends ReasonerBase implements AddNode, BuildScene, Recogn
 
         ////Build Scene
         ObjectClassDescriptor ocd= new ObjectClassDescriptor(SITBase.CLASS.PRIMITIVE, ontoRef);
-        ocd.readSemantic();
-        Set<ObjectIndividualDescriptor> objIndv = ocd.buildIndividualClassified();
+        ocd.readExpressionAxioms();
+        Set<ObjectIndividualDescriptor> objIndv = ocd.buildIndividualInstances();
         Set<GeometricPrimitive> objectsRead = BuildScene.buildScene(objIndv,ontoRef);
         ///////// clean ontology
 

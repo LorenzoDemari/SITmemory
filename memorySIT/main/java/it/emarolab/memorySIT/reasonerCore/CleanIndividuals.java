@@ -1,4 +1,4 @@
-package it.emarolab.sit.reasonerCore;
+package it.emarolab.memorySIT.reasonerCore;
 
 import it.emarolab.amor.owlInterface.OWLReferences;
 import it.emarolab.sit.SITBase;
@@ -25,7 +25,7 @@ public interface CleanIndividuals {
             ontoRef.removeIndividual(i.getInstance());
 
         recognition.getSceneDescriptor().removeTypeIndividual(SITBase.CLASS.SCENE);
-        recognition.getSceneDescriptor().writeSemantic();
+        recognition.getSceneDescriptor().writeExpressionAxioms();
 
 
 
