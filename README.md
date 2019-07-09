@@ -1,94 +1,88 @@
-<p align="center"> 
-<img src="https://github.com/JJoeNapoli/injected_armor_pkgs/blob/master/Edited_sit_algorithm.jpeg">
-</p>
-<p align="center"> 
-<img src="https://github.com/JJoeNapoli/injected_armor_pkgs/blob/master/Architecture_human_like_memory.jpeg">
-</p>
+# OWLOOP
 
-# injected_armor
-an extention of [ARMOR](https://arxiv.org/abs/1706.10151) with OWLOOP and the injected service SIT.
+Enabling a developer to use **O**ntology **W**eb **L**anguage (OWL) along with its reasoning capabilities in an **O**bject **O**riented **P**rogramming (OOP) paradigm, by providing an easy to use interface.
 
-# Overview 
+Although OWL and OOP paradigms have similar structure, there are some key differences between them; see this [W3C publication](https://www.w3.org/2001/sw/BestPractices/SE/ODSD/) for more details about the differences. Nevertheless, it is possible to use OWL along with its reasoning capabilities within applications developed in an OOP paradigm, by using the classic [OWL-API](https://github.com/owlcs/owlapi).
+But, the usage of classic OWL-API leaves your application filled with lots of boilerplate code. Therefore, the **OWLOOP-API** (built on top of OWL-API), not only reduces boilerplate code but enables interaction with 'OWL entities', i.e, Concept (also known as, Class), Individual, Object property and Data property as objects within the OOP paradigm. These objects are termed as Descriptors (i.e., ConceptDescriptor, IndividualDescriptor, ObjectPropertyDescriptor and DataPropertyDescriptor).  
+Furthermore, with the help of a descriptor, OWLOOP enables synchronization of axioms between the OWL paradigm and the OOP paradigm.
 
-This repository contains a [ROSJAVA](http://wiki.ros.org/rosjava) packages for managing OWL ontologies in a robotic architecture.
-The repository contains three ROS packages:
-- [injected_armor_msgs](https://github.com/JJoeNapoli/injected_armor_pkgs/tree/master/injected_armor_msgs): contains the definition of the messages for interacting with the ontology through ARMOR ROS service.
-- [injected_armor](https://github.com/JJoeNapoli/injected_armor_pkgs/tree/master/injected_armor): contains the services and libraries for interacting with OWL ontologies.
-- [armor_py_client_api](https://github.com/JJoeNapoli/injected_armor_pkgs/tree/master/armor_py_client_api): contains an example, a test script, and common utility fot using ARMOR from a Python ROS client. 
+## Table of Contents
+1. Reference to the publication
+2. Installation
+3. Usage
+4. License
+5. Dependencies
+6. Known Issues to be Resolved
+7. Author's message
 
-The `injected_armor` package contains three modules:
-- [amor](https://github.com/JJoeNapoli/injected_armor_pkgs/tree/master/injected_armor/amor): is the Java library that interacts with OWL API and Reasoners in a trade safe manner. This is the core for using OWL ontologies.
-- [owloop](https://github.com/JJoeNapoli/injected_armor_pkgs/tree/master/injected_armor/owloop): is an extension of `amor` that allows to interact with ontology in an Object Oriented Programming manner.
-- [armor](https://github.com/JJoeNapoli/injected_armor_pkgs/tree/master/injected_armor/armor): is a ROS service that depends on `amor` and `injected_armor_msgs` for allow ROS clients to manipulate ontologies from other packages.
-- [sit](https://github.com/JJoeNapoli/injected_armor_pkgs/tree/master/injected_armor/sit): is a library that implements the Scene Identification and Tagging (SIT) algorithm. It depends on `owloop` (which consequentially depends on `amor`). This library should be used by `armor` in order to inject a new service. 
+#
 
+## 1. Reference to the Publication
 
-# Installation
+This repository has been published in the journal ... (**todo**: add the link here once the repo gets published)
 
-This repository must be a child of the src folder in your workspace to reach the maven repository (set in the `build.gradle` inside each module as `../../../../devel/share/maven/`).
+## 2. Installation
 
-Run `catkin_make` and test the basic armor service with
-``roslaunch armor_py_client_api armorTest.launch``
+- Clone or download the repository.
+- Open the project by opening the file `owloop/build.gradle` in IntelliJ, with the following parameters ... (**todo**: show screen shot of the correct parameters)
 
+    **OR**
 
-# Prerequisites
-- **Ubuntu Version 16.04.5 LTS (Xenial) release:**
-  - Link to the Official [Release Ubuntu Site](http://releases.ubuntu.com/16.04/).
-  - The above Ubuntu edition was required in our project scope in order to run easily all the packages.
-- **ROS Kinetic Kame distribution:**
-  - Link to the Wiki [ROS Kinetic Page](http://wiki.ros.org/kinetic).
-      
-  - Tip: Every time you need to compile the code it’s required to source the setup.*sh file. If you want to avoid it, you can add the following instruction at the end of the hidden file “Home/.bashrc”:
-      
-      ```
-      > source /opt/ros/kinetic/setup.bash
-      ```
-      
-- **RosJava Version:**
-  - Link: [http://wiki.ros.org/rosjava](http://wiki.ros.org/rosjava).
-  - RosJava provides both a client library for ROS communications in java as well as growing list of core tools (e.g. tf, geometry) and drivers.  
-  - Installation Methods:
-    - *Source Installation* - a mostly self-contained source installation of core components and messages for a working catkin-rosjava development environment.
-    - *Deb Installation (used)* - install Rosjava debs and overlay your Rosjava/android source workspace on top of these. 
-    - *No ROS Installation* - use the Rosjava/message libraries in your own development environment via maven. 
-  - Deb Installation:
-    - *Debs* - All the rosjava debs are provided by a single rosjava metapackage: 
-    
-    ```
-    > sudo apt-get install ros-kinetic-rosjava
-    ```
-    
-  - Tip: In the above macro section it was showed a shortcut whose role consisted of avoiding periodically the sourcing of  setup.*sh file. The same could be applied here with the code:
-    
-    ```
-    > source ~/rosjava/devel/setup.bash
-    ```
-    
-- **ARMOR package:**
-  - Link: [armor](https://github.com/JJoeNapoli/injected_armor_pkgs/tree/master/injected_armor/armor).
-  - [README.MD](https://github.com/JJoeNapoli/injected_armor_pkgs/blob/master/injected_armor/armor/README.MD).
-  - This management system for single and multi-ontology architecture allows to load, query and modify multiple ontologies. Although it’s ease to use, ARMOR1 provides a large share of OWL APIs functions and capabilities in a simple server-client architecture. The system’s goal is to erase the use of ontologies in robotics by bringing these features to developers working under ROS.
+- Add the following dependency in your project's `build.gradle` file ... (**todo**: the developer should be able to add a single line and thus have acess to the OWLOOP API)
+```gradle
+compile group: 'com.github.owloop', name: 'owloop-api', version: '1.0'
+```
 
-  
-- **AMOR package** (optional installation):
-  - Link:[amor](https://github.com/JJoeNapoli/injected_armor_pkgs/blob/master/injected_armor/amor).
-  - [README.MD](https://github.com/JJoeNapoli/injected_armor_pkgs/blob/master/injected_armor/amor/README.MD).
-  - As mentioned above, this belongs less capabilities than the ARMOR package; however, AMOR package is considered a complete library of helper functions for OWL ontologies.
-  
-  
-    
-- **Intellij IDEA:**
-  - Link:[IDEA](https://www.jetbrains.com/idea/).
-  - The worth aspect of this clever Java IDE is characterized by the maneuverability of surfing among the classes, which makes the job easier for a developer. This peculiarity guaranteed us a key role in our project caused by the huge amount of classes.
-    
-- **Protégé:**
-  - Link:[Protégé](https://protege.stanford.edu/download/protege/4.0/installanywhere/).
-  - The function of this software during development of rosjava classes has a key role thanks to the graphical aspect, which offers an intuitive comprehension of the node graph and how it works.  
+## 3. Usage
+
+To explain the usage of OWLOOP, we present in this repository's [wiki](https://github.com/EmaroLab/owloop/wiki):
+
+- The overall [structure of the OWLOOP project](https://github.com/EmaroLab/owloop/wiki/1.-OWLOOP:-Project-Structure-&-JavaDoc#project-structure) and its [JavaDoc](https://github.com/EmaroLab/owloop/wiki/1.-OWLOOP:-Project-Structure-&-JavaDoc#javadoc).
+
+- The [Descriptor](https://github.com/EmaroLab/owloop/wiki/2.-The-OWLOOP-Descriptor#what-is-a-descriptor), its [types](https://github.com/EmaroLab/owloop/wiki/2.-The-OWLOOP-Descriptor#what-are-the-types-of-descriptors), the possible [expressions](https://github.com/EmaroLab/owloop/wiki/2.-The-OWLOOP-Descriptor#descriptor-expressions) that each type can implement and the useful [methods](https://github.com/EmaroLab/owloop/wiki/2.-The-OWLOOP-Descriptor#descriptor-methods) it provides.
+
+- [Examples](https://github.com/EmaroLab/owloop/wiki/3.-Example:-Creating-a-Simple-or-a-Compound-Descriptor) that show construction of a [simple descriptor](https://github.com/EmaroLab/owloop/wiki/3.-Example:-Creating-a-Simple-or-a-Compound-Descriptor#a-simple-concept-descriptor) vs a [compound descriptor](https://github.com/EmaroLab/owloop/wiki/3.-Example:-Creating-a-Simple-or-a-Compound-Descriptor#a-compound-concept-descriptor).
+
+- An [example](https://github.com/EmaroLab/owloop/wiki/4.-Example:-Adding-Axioms-to-an-Ontology) that shows how to add axioms to an ontology, using descriptors.
+
+- An [example](https://github.com/EmaroLab/owloop/wiki/5.-Example:-Inferring-Axioms-from-an-Ontology) that shows how to infer some knowledge (i.e., axioms) from axioms already present in an ontology, and the particular usefulness of the [descriptor build method](https://github.com/EmaroLab/owloop/wiki/5.-Example:-Inferring-Axioms-from-an-Ontology#descriptor-build-method).
+
+- An [example](https://github.com/EmaroLab/owloop/wiki/6.-Example:-Removing-Axioms-from-an-Ontology) that shows how to remove axioms from an ontology, using descriptors.
+
+## 4. License
+
+OWLOOP is under the license: [GNU General Public License v3.0](owloop/LICENSE)
 
 
-## Contacts
+## 5. Dependencies
 
-For comment, discussions or support refer to this git repository open issues before to contact us (more detailed contacts to the authors is further specified in each module)
- - [luca.buoncompagni@edu.unige.it](mailto:luca.buoncompagni@edu.unige.it).
+[Gradle](https://gradle.org/) is used for building OWLOOP and it has the following dependencies; can be found in `owloop/build.gradle`:
 
+- [aMOR](https://github.com/EmaroLab/multi_ontology_reference): **a** **M**ulti-**O**ntology **R**eference library (based on OWL-API) that provides helper functions for OWL Ontologies.
+- [OWL-API](https://github.com/owlcs/owlapi): a Java API for creating, manipulating and serialising OWL Ontologies.
+- [Pellet](https://github.com/stardog-union/pellet): an open source OWL 2 DL reasoner.
+- [JUnit](https://github.com/junit-team): a programmer-oriented testing framework for Java.
 
+## 6. Issues to be Resolved
+
+We are currently working on a known issue, i.e., during manipulation of a class definition, especially while removing restrictions, due to an unknown (for now) reason, the restrictions do not get removed. 
+To circumvent the problem (for now), we clear the class hierarchy and regenerate it from scratch, instead of updating it. 
+
+## 7. Author's message
+Feel free to contribute to OWLOOP by sharing your thoughts and ideas, raising issues (if found) and providing bug-fixes. 
+For any information or support, please do not hesitate to contact us through this Github repository or by email.
+
+[luca.buoncompagni@edu.unige.it](mailto:luca.buoncompagni@edu.unige.it),
+[kareem.syed.yusha@dibris.unige.it](mailto:kareem.syed.yusha@dibris.unige.it).
+
+# Notes to self
+
+## 8. Check List Before Publishing Repo on Maven Central
+
+- [ ] Add the UML in /documentation directory
+- [ ] Create a fresh JavaDoc in /documentation directory
+- [x] Fix the bug of removing axioms. (*The problem was in /core Axiom*)
+- [ ] Finalize a plan for AMOR dependency. (*Luca gives green signal for pushing AMOR to Maven Central*)
+- [ ] Make OWLOOP as a release 2.0
+- [ ] Add disjoint to the Classes (ROBOT disjoint with DOOR AND LOCATION) and Individuals (all disjoint to each other)
+- [ ] Merge with the master branch
